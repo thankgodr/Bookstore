@@ -1,8 +1,6 @@
-const Category = () => {
-    return (
+const Category = () => (
         <div>
             <button>Check Status</button>
         </div>
-    )
-}
-export default Category
+);
+export default Category;
