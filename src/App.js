@@ -1,19 +1,22 @@
 import { Route, Routes } from 'react-router-dom';
+import { Provider } from 'react-redux';
 import './App.css';
 import Header from './components/Header';
-import BookModel from './models/bookmodel';
 import NavRoutes from './navigation/navroutes';
 import Books from './pages/Books';
 import Category from './pages/Category';
+import store from './redux/configureStore';
 
 const App = () => (
-    <div className="App">
+  <div className="App">
+    <Provider store={store}>
       <Header></Header>
       <Routes>
-        <Route path={NavRoutes.HOME} element={<Books bookList={[new BookModel('Test title', 'ThankGod Richard', 'Javascript')]} />} />
+        <Route path={NavRoutes.HOME} element={<Books />} />
         <Route path={NavRoutes.BOOKS} element={<Category />} />
       </Routes>
-    </div>
+    </Provider>
+  </div>
 );
 
 export default App;

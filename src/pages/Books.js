@@ -1,47 +1,24 @@
-import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 import AddNewBook from '../components/AddNewBook';
 import Book from '../components/Book';
+import BookModel from '../models/bookmodel';
 
-const Books = (props) => {
-  const addComment = (book) => {
-    // Todo implement add comment
-    parseInt(book, 10);
-  };
-
-  const removeBook = (book) => {
-    // Todo implement remove book
-    parseInt(book, 10);
-  };
-
-  const editBook = (book) => {
-    // Todo implement remove book
-    parseInt(book, 10);
-  };
-
-  const updateBook = (book) => {
-    // Todo implement remove book
-    parseInt(book, 10);
-  };
-
-  return (
-        <div>
-            {props.bookList.map((book) => <Book
-                title={book.title}
-                author={book.author}
-                book={book}
-                commentFunction={addComment}
-                removeFunction={removeBook}
-                editFunction={editBook}
-                updateFunction={updateBook}
-                key={book.id}
-            />)}
-            <AddNewBook />
-        </div>
+const Books = () => {
+  const books = useSelector((state) => state.books);
+  const mappedBooks = books.books.map(
+    (eachBook) => Object.assign(new BookModel(), JSON.parse(eachBook)),
   );
-};
-
-Books.propTypes = {
-  bookList: PropTypes.array.isRequired,
+  return (
+    <div>
+      {mappedBooks.map((book) => <Book
+        title={book.title}
+        author={book.author}
+        book={book}
+        key={book.id}
+      />)}
+      <AddNewBook />
+    </div>
+  );
 };
 
 export default Books;

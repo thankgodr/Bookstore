@@ -1,25 +1,27 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const CHECK_STATUS = 'bookstore/redux/categories/CHECK_STATUS';
+export const CHECK_STATUS = 'bookstore/redux/categories/CHECK_STATUS';
 
 const initialState = {
   categories: [],
+  status: '',
 };
 
 const categorySlice = createSlice({
   name: 'category',
   initialState,
   reducers: {
-    categoryReducer(state = initialState, action) {
-      switch (action.type) {
+    categoryAction(state = initialState, action) {
+      switch (action.payload.type) {
         case CHECK_STATUS:
-          return 'Under construction';
+          state.status = 'Under construction';
+          break;
         default:
-          return state;
+          state = { ...state };
       }
     },
   },
 });
 
-export { CHECK_STATUS };
+export const { categoryAction } = categorySlice.actions;
 export default categorySlice.reducer;
