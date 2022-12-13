@@ -5,7 +5,6 @@ import BookModel from '../models/bookmodel';
 
 const Books = () => {
   const books = useSelector((state) => state.books);
-  console.log(books.books);
   const mappedBooks = books.books.map(
     (eachBook) => Object.assign(new BookModel(), JSON.parse(eachBook)),
   );

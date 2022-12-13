@@ -1,12 +1,24 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { useState } from 'react';
 import BookModel from '../models/bookmodel';
 import {
-  ADD_BOOK, bookAction, EDIT_NEWBOOK, EDIT_NEWBOOK_AURTHOR,
+  ADD_BOOK, bookAction,
 } from '../redux/books/books';
 
 const AddNewBook = () => {
   const dispatch = useDispatch();
-  const newBook = useSelector((state) => state.books.newBook);
+  const [newBookName, setNewBookName] = useState('');
+  const [newBookAuthur, setNewBookAuthur] = useState('');
+
+  const addBookToStore = () => {
+    const tempBookModel = new BookModel(newBookName, newBookAuthur, 'Testing');
+    setNewBookAuthur('');
+    setNewBookName('');
+    return {
+      type: ADD_BOOK,
+      book: JSON.stringify(tempBookModel),
+    };
+  };
   return (
         <form className="form-inline">
             <label
@@ -18,11 +30,8 @@ const AddNewBook = () => {
                 className="form-control mb-2 mr-sm-2"
                 id="inlineFormInputName2"
                 placeholder="Book Title"
-                value={newBook.bookName}
-                onChange={(e) => dispatch(bookAction({
-                  type: EDIT_NEWBOOK,
-                  bookName: e.target.value,
-                }))}
+                value={newBookName}
+                onChange={(e) => setNewBookName(e.target.value)}
             />
 
             <label
@@ -35,11 +44,8 @@ const AddNewBook = () => {
                     className="form-control"
                     id="inlineFormInputGroupUsername2"
                     placeholder="Author"
-                    value={newBook.author}
-                    onChange={(e) => dispatch(bookAction({
-                      type: EDIT_NEWBOOK_AURTHOR,
-                      author: e.target.value,
-                    }))}
+                    value={newBookAuthur}
+                    onChange={(e) => setNewBookAuthur(e.target.value)}
                 />
             </div>
 
@@ -48,9 +54,8 @@ const AddNewBook = () => {
                 className="btn btn-primary mb-2"
                 onClick={(e) => {
                   e.preventDefault();
-                  const tempBookModel = new BookModel(newBook.bookName, newBook.author, 'Testing');
                   dispatch(bookAction(
-                    { type: ADD_BOOK, book: JSON.stringify(tempBookModel) },
+                    addBookToStore(),
                   ));
                 }}>Add Book</button>
         </form>

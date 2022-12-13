@@ -4,6 +4,19 @@ import BookModel from '../models/bookmodel';
 import { bookAction, REMOVE_BOOK, UPDATE_BOOK_STATUS } from '../redux/books/books';
 
 const Book = (props) => {
+  const removeBookFromStore = (id) => ({
+    type: REMOVE_BOOK,
+    id,
+  });
+
+  const editBookStatusInStore = (book) => {
+    book.updateCurrentChapter(props.book.currentChapter + 1);
+    return {
+      type: UPDATE_BOOK_STATUS,
+      id: props.book.id,
+      book: JSON.stringify(book),
+    };
+  };
   const dispatch = useDispatch();
   return (
         <div className='card'>
@@ -23,10 +36,7 @@ const Book = (props) => {
                                 (event) => {
                                   event.preventDefault();
                                   dispatch(bookAction(
-                                    {
-                                      type: REMOVE_BOOK,
-                                      id: props.book.id,
-                                    },
+                                    removeBookFromStore(props.book.id),
                                   ));
                                 }}>Remove
                             </button>
@@ -49,14 +59,8 @@ const Book = (props) => {
                     <button onClick={
                         (event) => {
                           event.preventDefault();
-                          const bookUpdated = props.book;
-                          bookUpdated.updateCurrentChapter(props.book.currentChapter + 1);
                           dispatch(bookAction(
-                            {
-                              type: UPDATE_BOOK_STATUS,
-                              id: props.book.id,
-                              book: JSON.stringify(bookUpdated),
-                            },
+                            editBookStatusInStore(props.book),
                           ));
                         }}>Update Progress
                     </button>
