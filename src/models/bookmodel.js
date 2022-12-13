@@ -6,7 +6,7 @@ export default class BookModel {
     this.comments = [];
     this.currentChapter = 0;
     this.totalChapter = 0;
-    this.id = new Date().getTime;
+    this.id = Date.now().toString(36) + Math.random().toString(36).substr(2);
   }
 
   updateTitle(title = '') {
