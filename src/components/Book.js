@@ -1,24 +1,21 @@
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import BookModel from '../models/bookmodel';
-import { bookAction, REMOVE_BOOK, UPDATE_BOOK_STATUS } from '../redux/books/books';
+import { bookAction, deleteBookFromAPI, REMOVE_BOOK, UPDATE_BOOK_STATUS } from '../redux/books/books';
 
 const Book = (props) => {
-  const removeBookFromStore = (id) => ({
-    type: REMOVE_BOOK,
-    id,
-  });
 
-  const editBookStatusInStore = (book) => {
-    book.updateCurrentChapter(props.book.currentChapter + 1);
-    return {
-      type: UPDATE_BOOK_STATUS,
-      id: props.book.id,
-      book: JSON.stringify(book),
+
+    const editBookStatusInStore = (book) => {
+        book.updateCurrentChapter(props.book.currentChapter + 1);
+        return {
+            type: UPDATE_BOOK_STATUS,
+            id: props.book.id,
+            book: JSON.stringify(book),
+        };
     };
-  };
-  const dispatch = useDispatch();
-  return (
+    const dispatch = useDispatch();
+    return (
         <div className='card'>
             <div className='row'>
                 <div className='col-md-6'>
@@ -34,10 +31,10 @@ const Book = (props) => {
                         <li>
                             <button onClick={
                                 (event) => {
-                                  event.preventDefault();
-                                  dispatch(bookAction(
-                                    removeBookFromStore(props.book.id),
-                                  ));
+                                    event.preventDefault();
+                                    dispatch(deleteBookFromAPI(
+                                        props.book.id
+                                    ));
                                 }}>Remove
                             </button>
                         </li>
@@ -58,22 +55,22 @@ const Book = (props) => {
                     <p>Chapter {props.book.currentChapter}</p>
                     <button onClick={
                         (event) => {
-                          event.preventDefault();
-                          dispatch(bookAction(
-                            editBookStatusInStore(props.book),
-                          ));
+                            event.preventDefault();
+                            dispatch(bookAction(
+                                editBookStatusInStore(props.book),
+                            ));
                         }}>Update Progress
                     </button>
                 </div>
             </div>
         </div>
-  );
+    );
 };
 
 Book.propTypes = {
-  title: PropTypes.string.isRequired,
-  author: PropTypes.string.isRequired,
-  book: PropTypes.instanceOf(BookModel).isRequired,
+    title: PropTypes.string.isRequired,
+    author: PropTypes.string.isRequired,
+    book: PropTypes.instanceOf(BookModel).isRequired,
 };
 
 export default Book;

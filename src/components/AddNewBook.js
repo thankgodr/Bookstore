@@ -2,24 +2,27 @@ import { useDispatch } from 'react-redux';
 import { useState } from 'react';
 import BookModel from '../models/bookmodel';
 import {
-  ADD_BOOK, bookAction,
+    addBooktoApi,
+    ADD_BOOK, bookAction,
 } from '../redux/books/books';
 
 const AddNewBook = () => {
-  const dispatch = useDispatch();
-  const [newBookName, setNewBookName] = useState('');
-  const [newBookAuthur, setNewBookAuthur] = useState('');
+    const dispatch = useDispatch();
+    const [newBookName, setNewBookName] = useState('');
+    const [newBookAuthur, setNewBookAuthur] = useState('');
 
-  const addBookToStore = () => {
-    const tempBookModel = new BookModel(newBookName, newBookAuthur, 'Testing');
-    setNewBookAuthur('');
-    setNewBookName('');
-    return {
-      type: ADD_BOOK,
-      book: JSON.stringify(tempBookModel),
+    const addBookToStore = () => {
+        const tempBookModel = new BookModel(newBookName, newBookAuthur, 'Action');
+        setNewBookAuthur('');
+        setNewBookName('');
+        return {
+            item_id: tempBookModel.id,
+            title: tempBookModel.title,
+            author: tempBookModel.author,
+            category: tempBookModel.genre
+        };
     };
-  };
-  return (
+    return (
         <form className="form-inline">
             <label
                 className="sr-only"
@@ -53,12 +56,12 @@ const AddNewBook = () => {
                 type="submit"
                 className="btn btn-primary mb-2"
                 onClick={(e) => {
-                  e.preventDefault();
-                  dispatch(bookAction(
-                    addBookToStore(),
-                  ));
+                    e.preventDefault();
+                    dispatch(addBooktoApi(
+                        addBookToStore()
+                    ));
                 }}>Add Book</button>
         </form>
-  );
+    );
 };
 export default AddNewBook;
