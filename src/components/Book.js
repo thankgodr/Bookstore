@@ -1,14 +1,9 @@
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import BookModel from '../models/bookmodel';
-import { bookAction, REMOVE_BOOK, UPDATE_BOOK_STATUS } from '../redux/books/books';
+import { bookAction, deleteBookFromAPI, UPDATE_BOOK_STATUS } from '../redux/books/books';
 
 const Book = (props) => {
-  const removeBookFromStore = (id) => ({
-    type: REMOVE_BOOK,
-    id,
-  });
-
   const editBookStatusInStore = (book) => {
     book.updateCurrentChapter(props.book.currentChapter + 1);
     return {
@@ -35,8 +30,8 @@ const Book = (props) => {
                             <button onClick={
                                 (event) => {
                                   event.preventDefault();
-                                  dispatch(bookAction(
-                                    removeBookFromStore(props.book.id),
+                                  dispatch(deleteBookFromAPI(
+                                    props.book.id,
                                   ));
                                 }}>Remove
                             </button>
