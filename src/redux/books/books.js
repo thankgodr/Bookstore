@@ -15,6 +15,8 @@ const initialState = {
   refereshList: false,
 };
 
+const getRandom = () => Math.round(Math.random() * (65 - 1) + 1);
+
 export const getBooksFromApi = createAsyncThunk(GET_BOOKS_FROM_API,
   () => Network.getRequest(`${bookstoreAPi}/apps/${process.env.REACT_APP_STORE_ID}/books`, true));
 
@@ -62,9 +64,11 @@ const bookSlice = createSlice({
           const tempBook = new BookModel(
             value.title,
             value.author,
-            value.categori,
+            value.category,
           );
           tempBook.id = key;
+          tempBook.currentChapter = getRandom();
+          tempBook.totalChapter = 100;
           bookArr.push(JSON.stringify(tempBook));
         });
       });
