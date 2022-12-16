@@ -8,7 +8,7 @@ const Category = () => {
   });
   const status = useSelector((state) => state.category);
   return (
-        <div>
+        <div className='book_container'>
             <h1>{status.status}</h1>
             <button onClick={(event) => {
               event.preventDefault();

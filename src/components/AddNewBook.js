@@ -4,6 +4,7 @@ import BookModel from '../models/bookmodel';
 import {
   addBooktoApi,
 } from '../redux/books/books';
+import '../css/newbook.css';
 
 const AddNewBook = () => {
   const dispatch = useDispatch();
@@ -22,25 +23,18 @@ const AddNewBook = () => {
     };
   };
   return (
-        <form className="form-inline">
-            <label
-                className="sr-only"
-                htmlFor="inlineFormInputName2"
-            />
-            <input
-                type="text"
-                className="form-control mb-2 mr-sm-2"
-                id="inlineFormInputName2"
-                placeholder="Book Title"
-                value={newBookName}
-                onChange={(e) => setNewBookName(e.target.value)}
-            />
-
-            <label
-                className="sr-only"
-                htmlFor="inlineFormInputGroupUsername2"
-            />
-            <div className="input-group mb-2 mr-sm-2">
+        <form className="form-inline row align-items-center">
+            <div className='col-md-5'>
+                <input
+                    type="text"
+                    className="form-control mb-2 mr-sm-2"
+                    id="inlineFormInputName2"
+                    placeholder="Book Title"
+                    value={newBookName}
+                    onChange={(e) => setNewBookName(e.target.value)}
+                />
+            </div>
+            <div className="col-md-5">
                 <input
                     type="text"
                     className="form-control"
@@ -51,15 +45,18 @@ const AddNewBook = () => {
                 />
             </div>
 
-            <button
-                type="submit"
-                className="btn btn-primary mb-2"
-                onClick={(e) => {
-                  e.preventDefault();
-                  dispatch(addBooktoApi(
-                    addBookToStore(),
-                  ));
-                }}>Add Book</button>
+            <div className='col-md-2'>
+                <button
+                    type="submit"
+                    className="primary-button-big "
+                    onClick={(e) => {
+                      e.preventDefault();
+                      dispatch(addBooktoApi(
+                        addBookToStore(),
+                      ));
+                    }}>Add Book</button>
+            </div>
+
         </form>
   );
 };

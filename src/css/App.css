@@ -1,0 +1,18 @@
+body {
+  padding: 4%;
+  background-color: #f5f6fa;
+}
+
+#root {
+  padding: 0 0 8%;
+  background-color: #fafafa;
+  box-shadow: 0 0 60px 0 rgb(0 0 0 / 10%);
+}
+
+.App {
+  border-radius: 10px !important;
+}
+
+.book_container {
+  padding: 4%;
+}

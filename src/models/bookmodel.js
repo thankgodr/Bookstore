@@ -26,6 +26,8 @@ export default class BookModel {
   }
 
   updateCurrentChapter(current = 0) {
-    this.currentChapter = current;
+    if (this.currentChapter < 100) {
+      this.currentChapter = current;
+    }
   }
 }
